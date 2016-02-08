@@ -14,39 +14,40 @@ var orangeLeaf = require("./lib/orangeLeaf");
 var whiteLeaf = require("./lib/whiteLeaf");
 var blackLeaf = require("./lib/blackLeaf");
 
-var greenTea = function (collection) {
+var greenTea = function (collection, filter) {
   self = this;
+  this.filter = filter;
   this.Collection = collection;
 
   // proxy required for recreation of the leaf object
   // due to an odd bug in mongo driver
 
-  var greenProxy = function (collection) {
-    return new greenLeaf(collection);
+  var greenProxy = function (collection, filter) {
+    return new greenLeaf(collection, filter);
   };
 
-  var yellowProxy = function (collection) {
-    return new yellowLeaf(collection);
+  var yellowProxy = function (collection, filter) {
+    return new yellowLeaf(collection, filter);
   };
 
-  var orangeProxy = function (collection) {
-    return new orangeLeaf(collection);
+  var orangeProxy = function (collection, filter) {
+    return new orangeLeaf(collection, filter);
   };
 
-  var blackProxy = function (collection) {
-    return new blackLeaf(collection);
+  var blackProxy = function (collection, filter) {
+    return new blackLeaf(collection, filter);
   };
 
-  var whiteProxy = function (collection) {
-    return new whiteLeaf(collection);
+  var whiteProxy = function (collection, filter) {
+    return new whiteLeaf(collection, filter);
   };
 
 
-  self.get = greenProxy(collection);
-  self.set = yellowProxy(collection);
-  self.update = orangeProxy(collection);
-  self.insert = whiteProxy(collection);
-  self.remove = blackProxy(collection);
+  self.get = greenProxy(collection, filter);
+  self.set = yellowProxy(collection, filter);
+  self.update = orangeProxy(collection, filter);
+  self.insert = whiteProxy(collection, filter);
+  self.remove = blackProxy(collection, filter);
 };
 
 module.exports = greenTea;

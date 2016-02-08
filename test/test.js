@@ -55,7 +55,6 @@ describe("Tea Tests", function () {
       locationCollection = db.collection("locations");
       locationCollection.drop(function (err, reply) {
         Location = new greenTea(locationCollection);
-        //Location = new greenTea(locationCollection);
         done();
       });
 

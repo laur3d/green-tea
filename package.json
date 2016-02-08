@@ -2,9 +2,13 @@
   "name": "green-tea",
   "version": "0.0.1",
   "description": "Fluent Api layer for mongo driver",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/laur3d/green-tea.git"
+  },
   "main": "index.js",
   "scripts": {
-    "test": "test"
+    "test": "node_modules/mocha/bin/mocha --harmony test/"
   },
   "keywords": [
     "mongodb",

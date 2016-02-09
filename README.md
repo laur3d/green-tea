@@ -118,9 +118,22 @@ Delete by passing just the id
      
      });
 
+### Filtering
+
+In order to have global filtering ( that will filter __ALL__ request ) just add the
+ require filtered to the constructor like this : 
+ 
+     Location = new greenTea(locationCollection, [{"country": "Italy"}]);
+            done();
+     });
+
+All the actions of this specific instance will be bound to the italy country. 
+If you try to update a country that does has a different country, it will tell you that
+that document does not exist.
 
 ### Still to do 
 
+* Soft Delete 
 * Performance improvements
 * More query options / support for more complex stuff
 * Config file

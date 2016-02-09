@@ -253,7 +253,8 @@ describe("Tea Tests", function () {
       expect(object).to.be.a("object");
       Location.remove.object(object).apply(function (err, result) {
         expect(err).to.be.null;
-        expect(result).to.be.true;
+        console.log(result);
+        expect(result.succesfull).to.be.true;
         asyncCB(null, true);
       });
     };
@@ -278,7 +279,7 @@ describe("Tea Tests", function () {
       expect(object).to.be.a("object");
       Location.remove.id(object._id).apply(function (err, result) {
         expect(err).to.be.null;
-        expect(result).to.be.true;
+        expect(result.succesfull).to.be.true;
         asyncCB(null, true);
       });
     };

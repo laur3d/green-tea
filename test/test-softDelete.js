@@ -18,7 +18,7 @@ describe("Tea Tests - soft delete", function () {
   var Location;
 
   var newLocation = {
-    "_id": "56b998a2087cd862040ed1ae",
+    "_id": new obj("56b998a2087cd862040ed1ae"),
     "name": "a",
     "prenume": "a",
     "path": null,
@@ -66,6 +66,62 @@ describe("Tea Tests - soft delete", function () {
     if (db) {
       db.close(done);
     }
+  });
+
+  it("should insert a new item", function (done) {
+    Location.insert.object(newLocation).apply(function (err, newObj) {
+      expect(err).to.be.null;
+      expect(newObj).to.be.a("array");
+      expect(newObj[0]).to.have.property("name", "a");
+      done();
+    });
+    //done();
+  });
+
+  it("should insert an array of items", function (done) {
+    Location.insert.objects(arrLocations).apply(function (err, result) {
+      expect(err).to.be.null;
+      expect(result).to.be.a("array");
+      expect(result).to.have.length.of.at.least(2);
+      expect(result[0]).to.have.property("name", "b");
+      done();
+    });
+  });
+
+  it("Should soft delete an item ", function(done){
+
+    Location.delete.id("56b998a2087cd862040ed1ae").apply(function (err, result) {
+      expect(err).to.be.null;
+      expect(result.succesfull).to.be.true;
+      done();
+    });
+
+
+  });
+
+  it("find all should not contain the soft deleted items", function(done){
+    Location.get.find(function(err, result){
+      expect(err).to.be.null;
+      expect(result).to.be.a("array");
+      expect(result).to.have.length(2);
+      done;
+    });
+  });
+
+  it("Should not find a soft deleted item by id", function(done){
+    expect(true).to.be.false;
+  });
+
+  it("should not be able to update a soft deleted item", function(done){
+    expect(true).to.be.false;
+  });
+
+  it("should not be able to delete a soft deleted item", function(done){
+    expect(true).to.be.false;
+  });
+
+  it("should  be able to revive a soft deleted item", function(done){
+    expect(true).to.be.false;
   });
 
 });

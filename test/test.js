@@ -29,6 +29,7 @@ describe("Tea Tests", function () {
 
   var arrLocations = [
     {
+      "_id": new obj("56b998a2087cd862040ed1ae"),
       "name": "b",
       "prenume": "b",
       "tenantId": 2,
@@ -97,10 +98,11 @@ describe("Tea Tests", function () {
     });
   });
 
-  it("should get an item with or query", function (done) {
+  it("should get an item with 'or' query", function (done) {
 
     Location.get.where().property({"name": "a"}).or().where().property({"prenume": "c"}).find(
       function (err, result) {
+        console.log(err);
         expect(err).to.be.null;
         expect(result).to.be.a("array");
         expect(result).to.have.length.of.at.least(2);
@@ -109,6 +111,21 @@ describe("Tea Tests", function () {
       });
 
   });
+
+  it("should get an item with 'and' query", function (done) {
+
+    Location.get.where().property({"name": "a"}).and().where().property({"prenume": "a"}).find(
+      function (err, result) {
+        console.log(err);
+        expect(err).to.be.null;
+        expect(result).to.be.a("array");
+        expect(result).to.have.length.of.at.least(1);
+        expect(result[0]).to.have.property("name", "a");
+        done();
+      });
+
+  });
+
 
   it("should get an item with simple query", function (done) {
 
@@ -147,7 +164,7 @@ describe("Tea Tests", function () {
 
     async.waterfall([
                       function getTheObject(asyncCB) {
-                        Location.get.where().property({"name": "a"}).find(function (err, result) {
+                        Location.get.where().property({"name": "a"}).and().property({path : { $ne: true}}).find(function (err, result) {
                           expect(err).to.be.null;
                           expect(result).to.be.a("array");
                           expect(result).to.have.length.of.at.least(1);
@@ -221,6 +238,7 @@ describe("Tea Tests", function () {
                       },
                       function (objToChange, asyncCB) {
                         expect(objToChange).to.be.a("object");
+
                         Location.set.property({"name": "Vasile"})
                           .forObjects({"_id": objToChange._id}).apply(function (err, obj) {
                           expect(err).to.be.null;

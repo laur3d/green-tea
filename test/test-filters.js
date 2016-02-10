@@ -100,7 +100,7 @@ describe("Tea Tests - with filters", function () {
 
   it("should  set values of objects in scope of filter", function (done) {
 
-    Location.set.property("prenume").to("Mickey the Moose").for({"name": "b"}).apply(function (err,
+    Location.set.property("prenume").to("Mickey the Moose").forObjects({"name": "b"}).apply(function (err,
                                                                                                result) {
       expect(err).to.be.null;
       expect(result).to.be.a("array");
@@ -111,7 +111,7 @@ describe("Tea Tests - with filters", function () {
 
   it("should not set values of objects outside of scope of filter", function (done) {
     //Location = new greenTea(locationCollection, [{"tenantId": 2}]);
-    Location.set.property("prenume").to("Mickey the Moose").for({"name": "c"}).apply(function (err,
+    Location.set.property("prenume").to("Mickey the Moose").forObjects({"name": "c"}).apply(function (err,
                                                                                                result) {
       expect(err).to.have.property("nModified", 0);
       expect(result).to.be.a("array");
@@ -185,7 +185,7 @@ describe("Tea Tests - with filters", function () {
     };
 
 
-    Location.remove.id("56b998a2087cd862040ed1ae").apply(function (err, result) {
+    Location.destroy.id("56b998a2087cd862040ed1ae").apply(function (err, result) {
       expect(err).to.be.null;
       expect(result.succesfull).to.be.false;
       done();

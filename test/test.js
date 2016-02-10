@@ -89,7 +89,7 @@ describe("Tea Tests", function () {
   });
 
   it("should find all", function (done) {
-    Location.get.find(function (err, result) {
+    Location.get.all().find(function (err, result) {
       expect(err).to.be.null;
       expect(result).to.be.a("array");
       expect(result).to.have.length.of.at.least(3);
@@ -190,7 +190,7 @@ describe("Tea Tests", function () {
                       function (objToChange, asyncCB) {
                         expect(objToChange).to.be.a("object");
                         Location.set.property("name").to("Gheoghe")
-                          .for({"_id": objToChange._id}).apply(function (err, obj) {
+                          .forObjects({"_id": objToChange._id}).apply(function (err, obj) {
                           expect(err).to.be.null;
                           expect(obj).to.be.a("array");
                           expect(obj).to.have.length.of.at.least(1);
@@ -222,7 +222,7 @@ describe("Tea Tests", function () {
                       function (objToChange, asyncCB) {
                         expect(objToChange).to.be.a("object");
                         Location.set.property({"name": "Vasile"})
-                          .for({"_id": objToChange._id}).apply(function (err, obj) {
+                          .forObjects({"_id": objToChange._id}).apply(function (err, obj) {
                           expect(err).to.be.null;
                           expect(obj).to.be.a("array");
                           expect(obj).to.have.length.of.at.least(1);
@@ -251,9 +251,8 @@ describe("Tea Tests", function () {
 
     var deleteObject = function (object, asyncCB) {
       expect(object).to.be.a("object");
-      Location.remove.object(object).apply(function (err, result) {
+      Location.destroy.object(object).apply(function (err, result) {
         expect(err).to.be.null;
-        console.log(result);
         expect(result.succesfull).to.be.true;
         asyncCB(null, true);
       });
@@ -277,7 +276,7 @@ describe("Tea Tests", function () {
 
     var deleteObject = function (object, asyncCB) {
       expect(object).to.be.a("object");
-      Location.remove.id(object._id).apply(function (err, result) {
+      Location.destroy.id(object._id).apply(function (err, result) {
         expect(err).to.be.null;
         expect(result.succesfull).to.be.true;
         asyncCB(null, true);

@@ -13,9 +13,24 @@ var yellowLeaf = require("./lib/yellowLeaf");
 var orangeLeaf = require("./lib/orangeLeaf");
 var whiteLeaf = require("./lib/whiteLeaf");
 var blackLeaf = require("./lib/blackLeaf");
+var greyLeaf = require("./lib/grayLeaf");
 
 var greenTea = function (collection, filter) {
   self = this;
+
+  if(filter === undefined){
+    filter = [];
+  }
+
+  var baseFilter = {
+    isDeleted: {
+      $ne: true
+    }
+  };
+
+  // add not deleted at the begining
+  filter.unshift(baseFilter);
+
   this.filter = filter;
   this.Collection = collection;
 
@@ -42,12 +57,17 @@ var greenTea = function (collection, filter) {
     return new whiteLeaf(collection, filter);
   };
 
+  var greyProxy = function (collection, filter) {
+    return new greyLeaf(collection, filter);
+  }
+
 
   self.get = greenProxy(collection, filter);
   self.set = yellowProxy(collection, filter);
   self.update = orangeProxy(collection, filter);
   self.insert = whiteProxy(collection, filter);
-  self.remove = blackProxy(collection, filter);
+  self.destroy = blackProxy(collection, filter);
+  self.delete = greyProxy(collection, filter);
 };
 
 module.exports = greenTea;

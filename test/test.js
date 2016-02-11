@@ -29,6 +29,7 @@ describe("Tea Tests", function () {
 
   var arrLocations = [
     {
+      "_id": new obj("56b998a2087cd862040ed1ae"),
       "name": "b",
       "prenume": "b",
       "tenantId": 2,
@@ -89,7 +90,7 @@ describe("Tea Tests", function () {
   });
 
   it("should find all", function (done) {
-    Location.get.find(function (err, result) {
+    Location.get.all().find(function (err, result) {
       expect(err).to.be.null;
       expect(result).to.be.a("array");
       expect(result).to.have.length.of.at.least(3);
@@ -97,7 +98,7 @@ describe("Tea Tests", function () {
     });
   });
 
-  it("should get an item with or query", function (done) {
+  it("should get an item with 'or' query", function (done) {
 
     Location.get.where().property({"name": "a"}).or().where().property({"prenume": "c"}).find(
       function (err, result) {
@@ -109,6 +110,20 @@ describe("Tea Tests", function () {
       });
 
   });
+
+  it("should get an item with 'and' query", function (done) {
+
+    Location.get.where().property({"name": "a"}).and().where().property({"prenume": "a"}).find(
+      function (err, result) {
+        expect(err).to.be.null;
+        expect(result).to.be.a("array");
+        expect(result).to.have.length.of.at.least(1);
+        expect(result[0]).to.have.property("name", "a");
+        done();
+      });
+
+  });
+
 
   it("should get an item with simple query", function (done) {
 
@@ -147,7 +162,7 @@ describe("Tea Tests", function () {
 
     async.waterfall([
                       function getTheObject(asyncCB) {
-                        Location.get.where().property({"name": "a"}).find(function (err, result) {
+                        Location.get.where().property({"name": "a"}).and().property({path : { $ne: true}}).find(function (err, result) {
                           expect(err).to.be.null;
                           expect(result).to.be.a("array");
                           expect(result).to.have.length.of.at.least(1);
@@ -190,7 +205,7 @@ describe("Tea Tests", function () {
                       function (objToChange, asyncCB) {
                         expect(objToChange).to.be.a("object");
                         Location.set.property("name").to("Gheoghe")
-                          .for({"_id": objToChange._id}).apply(function (err, obj) {
+                          .forObjects({"_id": objToChange._id}).apply(function (err, obj) {
                           expect(err).to.be.null;
                           expect(obj).to.be.a("array");
                           expect(obj).to.have.length.of.at.least(1);
@@ -221,8 +236,9 @@ describe("Tea Tests", function () {
                       },
                       function (objToChange, asyncCB) {
                         expect(objToChange).to.be.a("object");
+
                         Location.set.property({"name": "Vasile"})
-                          .for({"_id": objToChange._id}).apply(function (err, obj) {
+                          .forObjects({"_id": objToChange._id}).apply(function (err, obj) {
                           expect(err).to.be.null;
                           expect(obj).to.be.a("array");
                           expect(obj).to.have.length.of.at.least(1);
@@ -251,9 +267,8 @@ describe("Tea Tests", function () {
 
     var deleteObject = function (object, asyncCB) {
       expect(object).to.be.a("object");
-      Location.remove.object(object).apply(function (err, result) {
+      Location.destroy.object(object).apply(function (err, result) {
         expect(err).to.be.null;
-        console.log(result);
         expect(result.succesfull).to.be.true;
         asyncCB(null, true);
       });
@@ -277,7 +292,7 @@ describe("Tea Tests", function () {
 
     var deleteObject = function (object, asyncCB) {
       expect(object).to.be.a("object");
-      Location.remove.id(object._id).apply(function (err, result) {
+      Location.destroy.id(object._id).apply(function (err, result) {
         expect(err).to.be.null;
         expect(result.succesfull).to.be.true;
         asyncCB(null, true);

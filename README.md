@@ -1,9 +1,14 @@
-# green-tea
+# green-tea 
+PROJECT STATUS: __IN DEVELOPEMENT__
+WARNING: __FOR NOW ONLY MONGO 2.6 is supported!__
 
+Travis : [![Build Status](https://travis-ci.org/laur3d/green-tea.svg?branch=master)](https://travis-ci.org/laur3d/green-tea)
 ### What is this ? 
 
 This is an abstraction layer over the base mongo driver, it uses a fluent API inspired by the 
 chai expect style 
+
+
 
 ### How to use it 
 

@@ -104,7 +104,7 @@ or a more fluent version
     });
 
 
-### Delete objects
+### Delete objects | ( soft delete )
 
 Delete by passing an existing object ( or an object that contains a valid _id property )
 
@@ -117,6 +117,25 @@ Delete by passing just the id
      Location.remove.id(object._id).apply(function (err, result) {
      
      });
+
+Revive an item, just add the revive call in a normal remove call ( I know, it will be moved to it's own class but
+ bear with me ... :) ).
+
+    Location.delete.id("56b998a2087cd862040ed1ae").revive().apply(function (err, result) {
+          expect(err).to.be.null;
+          expect(result.succesfull).to.be.true;
+          done();
+    });
+
+### Destroy | Permanent delete 
+
+Basicly it's the same as remove syntax wise just use "destroy" instead of "remove". Also, obviously there is no revive... 
+
+    Location.destroy.object(object).apply(function (err, result) {
+            expect(err).to.be.null;
+            expect(result.succesfull).to.be.true;
+            asyncCB(null, true);
+    });
 
 ### Filtering
 
@@ -131,9 +150,16 @@ All the actions of this specific instance will be bound to the italy country.
 If you try to update a country that does has a different country, it will tell you that
 that document does not exist.
 
+### The soft delete mechanism
+
+The soft delete mechanism basicly works like a global filter that gets set on the constructor of green-tea. 
+So the ideea is that all queries ( except revive from the "remove" functionality ) will ignore the soft deleted items.
+The soft delete works as by adding an "isDeleted: true" flag on the object, it uses the "{ isDeleted: { $ne: true } }" 
+global filter.
+
 ### Still to do 
 
-* Soft Delete 
+
 * Performance improvements
 * More query options / support for more complex stuff
 * Config file

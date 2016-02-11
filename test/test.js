@@ -102,7 +102,6 @@ describe("Tea Tests", function () {
 
     Location.get.where().property({"name": "a"}).or().where().property({"prenume": "c"}).find(
       function (err, result) {
-        console.log(err);
         expect(err).to.be.null;
         expect(result).to.be.a("array");
         expect(result).to.have.length.of.at.least(2);
@@ -116,7 +115,6 @@ describe("Tea Tests", function () {
 
     Location.get.where().property({"name": "a"}).and().where().property({"prenume": "a"}).find(
       function (err, result) {
-        console.log(err);
         expect(err).to.be.null;
         expect(result).to.be.a("array");
         expect(result).to.have.length.of.at.least(1);

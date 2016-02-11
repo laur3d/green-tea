@@ -96,7 +96,6 @@ describe("Tea Tests - soft delete", function () {
       done();
     });
 
-
   });
 
   it("find all should not contain the soft deleted items", function(done){
@@ -104,24 +103,43 @@ describe("Tea Tests - soft delete", function () {
       expect(err).to.be.null;
       expect(result).to.be.a("array");
       expect(result).to.have.length(2);
-      done;
+      done();
     });
   });
 
   it("Should not find a soft deleted item by id", function(done){
-    expect(true).to.be.false;
+    Location.get.where().property("_id").is("56b998a2087cd862040ed1ae").find(function(err, result){
+      expect(err).to.be.null;
+      expect(result).to.be.a("array");
+      expect(result).to.be.empty;
+      done();
+    });
   });
 
   it("should not be able to update a soft deleted item", function(done){
-    expect(true).to.be.false;
+    Location.set.property("name").to("Mickey the MOOSE").forObjects({"_id" : new obj("56b998a2087cd862040ed1ae")})
+      .apply(function(err, data){
+        expect(err).to.have.property("nModified", 0);
+        expect(data).to.be.a("array");
+        expect(data).to.be.empty;
+        done();
+      });
   });
 
   it("should not be able to delete a soft deleted item", function(done){
-    expect(true).to.be.false;
+    Location.destroy.id("56b998a2087cd862040ed1ae").apply(function (err, result) {
+      expect(err).to.be.null;
+      expect(result.succesfull).to.be.false;
+      done();
+    });
   });
 
   it("should  be able to revive a soft deleted item", function(done){
-    expect(true).to.be.false;
+    Location.delete.id("56b998a2087cd862040ed1ae").revive().apply(function (err, result) {
+      expect(err).to.be.null;
+      expect(result.succesfull).to.be.true;
+      done();
+    });
   });
 
 });

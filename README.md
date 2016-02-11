@@ -92,14 +92,14 @@ Replace the whole object, passing a new version from a previous optained version
 #### Update specific values
 
      Location.set.property("name").to("John")
-             .for({"_id": objToChange._id}).apply(function (err, obj) {
+             .forObjects({"_id": objToChange._id}).apply(function (err, obj) {
                           
      });
 
 or a more fluent version
 
     Location.set.property({"name": "John"}).and().property({"state": "NY"})
-                              .for({"_id": objToChange._id}).apply(function (err, obj) {
+                              .forObjects({"_id": objToChange._id}).apply(function (err, obj) {
     
     });
 

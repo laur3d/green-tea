@@ -1,0 +1,18 @@
+language: node_js
+node_js:
+  - stable
+sudo: false
+services:
+ - rabbitmq
+ - mongodb
+
+services:
+  - mongodb
+install: npm install -d
+
+script:
+  - "npm run test-cov"
+
+after_success:
+  - "npm install coveralls && cat ./coverage/lcov.info | coveralls"
+

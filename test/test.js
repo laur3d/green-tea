@@ -52,6 +52,7 @@ describe("Tea Tests", function () {
       "assets": []
     },
     {
+      "_id" : "",
       "name": "c",
       "prenume": "c",
       "tenantId": 3,

@@ -25,7 +25,20 @@ describe("Tea Tests", function () {
     "parentId": null,
     "attributes": [],
     "assets": []
-  }
+  };
+
+  var clientMocObj = {
+    "_id": "56b998a2087cd862040ed1ae",
+    "name": "b",
+    "prenume": "b",
+    "tenantId": 2,
+    "path": "CHECKCHANGE",
+    "parentId": null,
+    "attributes": [],
+    "assets": []
+  };
+
+
 
   var arrLocations = [
     {
@@ -190,6 +203,18 @@ describe("Tea Tests", function () {
     });
 
   });
+
+  it("should update an item using object functionality [ _id as string ] | emulating call from client", function (done) {
+
+    Location.update.object(clientMocObj).apply(function (err, obj) {
+      expect(err).to.be.null;
+      expect(obj).to.be.a("array");
+      expect(obj).to.have.length.of.at.least(1);
+      expect(obj[0]).to.have.property("path", "CHECKCHANGE");
+      done();
+    });
+  });
+
 
   it("should update an item using property functionality", function (done) {
     async.waterfall([

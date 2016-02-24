@@ -1,6 +1,6 @@
 {
   "name": "green-tea",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "description": "Fluent Api layer for mongo driver",
   "repository": {
     "type": "git",

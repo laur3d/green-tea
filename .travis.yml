@@ -3,11 +3,12 @@ node_js:
   - stable
 #sudo: false
 #services:
+# - rabbitmq
 # - mongodb
 
 before_script:
   - sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv EA312927
-  - sudo echo "deb http://repo.mongodb.org/apt/ubuntu trusty/mongodb-org/3.2 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-3.2.list
+  - echo "deb http://repo.mongodb.org/apt/ubuntu trusty/mongodb-org/3.2 multiverse"
   - sudo apt-get update
   - sudo apt-get install -y mongodb-org
   - sleep 15 #mongo may not be responded directly. See http://docs.travis-ci.com/user/database-setup/#MongoDB
@@ -22,4 +23,3 @@ script:
 
 after_success:
   - "npm install coveralls && cat ./coverage/lcov.info | coveralls"
-

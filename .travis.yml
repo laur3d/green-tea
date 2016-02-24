@@ -2,8 +2,8 @@ language: node_js
 node_js:
   - stable
 #sudo: false
-services:
- - mongodb
+#services:
+# - mongodb
 
 before_script:
   - sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv EA312927

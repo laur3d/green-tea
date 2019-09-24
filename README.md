@@ -1,5 +1,5 @@
 # green-tea 
-PROJECT STATUS: __IN DEVELOPEMENT__
+PROJECT STATUS: __ABBANDONED__
 
 Travis : [![Build Status](https://travis-ci.org/laur3d/green-tea.svg?branch=master)](https://travis-ci.org/laur3d/green-tea)
 ### What is this ? 
